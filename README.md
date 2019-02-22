@@ -18,6 +18,6 @@ Compra.java Añadir Arraylist de productos y un atributo idCompra
 Crear Interfaz DAOCompra,DAOProducto
 Crear Implementaciones
 
-Cristian: DAOProducto
-Luis: DAOCompra, Compra.java
+#### Cristian: DAOProducto
+#### Luis: DAOCompra, Compra.java
 
