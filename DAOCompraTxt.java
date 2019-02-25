@@ -10,7 +10,7 @@ public class DAOCompraTxt implements DAOCompra{
     public void grabar(Compra c){
         String datos = "";
         datos += c.getnumFac() + ":" + c.getFecha() + "|";
-        datos += c.getPer().getName() + ":" + "|";
+        datos += c.getClient().getNombre() + ":" + "|";
         for(Producto producto : c.getProductos()){
             datos += producto.getName() + ":" + producto.getPeso()+ "|";
 

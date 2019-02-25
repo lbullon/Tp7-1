@@ -25,7 +25,9 @@ public class Cliente {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	@Override
 	public String toString() {
-		return String cadena = "Cliente: "+nombre+" "+dni+" "+direccion;
-	}
+	 String cadena = "Cliente: "+nombre+" "+dni+" "+direccion;
+	 return cadena;
+	 }
 }

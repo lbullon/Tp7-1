@@ -2,25 +2,25 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Compra {
-  private Person per;
+  private Cliente cliente;
   private ArrayList <Producto> listaProductos;
   private int cant;
   private int numFac;
   private Date fecha;
   public Compra() {
     
-    per = new Person();
+    cliente = new Cliente();
     listaProductos = new ArrayList<Producto>();
     cant = 0;
     numFac = 0;
     fecha = new java.util.Date();
   }
-  public void setPer(String name) {
-    per.setName(name);
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
   }
 
-  public Person getPer() {
-    return per;
+  public Cliente getCliente() {
+    return cliente;
   }
 
   public void setnumFac(int numFac) {
