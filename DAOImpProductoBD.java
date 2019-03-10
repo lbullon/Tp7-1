@@ -74,7 +74,7 @@ public class DAOImpProductoBD implements DAOProducto{
       pstmt.setDouble(3, producto.getPrecio());
       pstmt.setDouble(4, producto.getCantidad());
       pstmt.executeUpdate();
-      System.out.println("Insetado en la DB ");
+      System.out.println("Insertado en la DB ");
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "***");
     }
@@ -91,7 +91,7 @@ public class DAOImpProductoBD implements DAOProducto{
       	pstmt.setDouble(4, p.getCantidad());
       	pstmt.executeUpdate();
       }
-      System.out.println("Insetados en la DB ");
+      System.out.println("Insertados en la DB ");
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "***");
     }
