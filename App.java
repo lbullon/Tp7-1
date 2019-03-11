@@ -9,7 +9,7 @@ public class App {
    public static void main(String args[]) {
     DAOCompraTxt txt = new DAOCompraTxt();
     
-    Person p;
+    Cliente cliente = null;
     String input;
     String line = null;
 	Console console = null;
@@ -17,7 +17,7 @@ public class App {
     Compra una_compra = new Compra();
     System.out.println(" Name: ? ");
     input = console.readLine();
-    una_compra.setPer(input);
+    cliente.setNombre(input);
     DAOImpCompraSerialized sr = new DAOImpCompraSerialized();
     
 
@@ -30,7 +30,7 @@ public class App {
 
           System.out.println(" Que fruta quieres: ? ");
           input = console.readLine();
-		  producto.setName(input);
+		   producto.setName(input);
 	      System.out.println(" Cantidad de " + producto.getName() + ": ? ");
           input = console.readLine();
           int peso = Integer.parseInt(input);
