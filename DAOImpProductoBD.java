@@ -91,7 +91,7 @@ public class DAOImpProductoBD implements DAOProducto{
       	pstmt.setDouble(4, p.getCantidad());
       	pstmt.executeUpdate();
       }
-      System.out.println("Insertados en la DB ");
+      System.out.println("Insetados en la DB ");
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "***");
     }

@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -25,46 +28,52 @@ public class DAOImpCompraBD implements DAOCompra {
 
   public void grabar (Compra compra) {
     String sql = "INSERT INTO compra (Factura,Sku,Dni,Fecha,Unidades) VALUES(?,?,?,?,?)";
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    String fechaComoCadena = sdf.format(compra.getFecha());
     try{
       PreparedStatement pstmt = con.prepareStatement(sql);
-      pstmt.setInt(1, compra.getNumFac());
-      pstmt.setInt(2, compra.getProducto().getSku());
-      pstmt.setString(3, compra.getCliente().getDni());
-      pstmt.setDate(4, compra.getFecha());
-      pstmt.setDouble(5, compra.getCantidad());
-      pstmt.executeUpdate();
+      for (Producto key : compra.getComprado().keySet()) {
+        pstmt.setInt(1, compra.getNumFac());
+        pstmt.setInt(2, key.getSku());
+        pstmt.setString(3, compra.getCliente().getDni());
+        pstmt.setString(4, fechaComoCadena);
+        pstmt.setDouble(5, compra.getComprado().get(key));
+        pstmt.executeUpdate();
+      }
       System.out.println("Insertado en la DB ");
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "***");
     }
   }
 
-  public Compra ticket (String dni,int numFac) { //Revisar Select
+  public Compra ticket (int numFac) {
     Compra compra = null;
-    Cliente cliente;
-    Producto producto;
-    Map<Producto,double> comprado;
-    String sqlCliente = "SELECT Dni, Nombre, Direccion FROM cliente WHERE Dni = '"+dni+"'"; // para conseguir datos de la tabla Cliente
-    String sqlProductos = "SELECT A.Sku, Nombre, Precio, Cantidad, Unidades FROM compra C, albaran A WHERE numFac ="+numFac; // Conseguir los datos de los productos y unidades compradas para generar el Map<Producto,Double>
-    String sqlFecha = "SELECT Fecha FROM compra WHERE Factura ="+numFac;
+    Cliente cliente = null;
+    Producto producto= null;
+    Map<Producto,Double> comprado= new HashMap<Producto,Double>();
+    String sql = "SELECT A.Sku,P.Dni,Fecha,Unidades,Name,Precio,Cantidad,Nombre,Direccion FROM compra C, albaran A, cliente P WHERE Factura ="+numFac+" AND A.Sku = C.Sku AND C.Dni = P.Dni";
     try {
       Statement stmt = con.createStatement();
-      ResultSet rs = stmt.executeQuery(sqlCliente);
-      cliente = new Cliente(rs.getString("Nombre"),rs.getString("Dni"),rs.getString("Direccion"));
-      ResultSet rs = stmt.executeQuery(sqlProductos);
+      ResultSet rs = stmt.executeQuery(sql);
+      cliente=new Cliente(rs.getString("Dni"),rs.getString("Nombre"),rs.getString("Direccion"));
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+      Date fecha = sdf.parse(rs.getString("Fecha"));
       while (rs.next()) {
-        producto = new Producto(rs.getInt("Sku"),rs.getString("Name"),rs.getDouble("Precio"), rs.getDouble("Cantidad"));
+        producto = new Producto(rs.getInt("Sku"),rs.getString("Name"),rs.getDouble("Precio"),rs.getDouble("Cantidad"));
         comprado.put(producto,rs.getDouble("Unidades"));
       }
-      ResultSet rs = stmt.executeQuery(sqlFecha);
-      compra = new Compra(cliente,comprado,numFac,rs.getDate("Fecha"));
+      compra = new Compra(cliente,comprado,numFac,fecha);
+      
     } catch (SQLException e) {
-      System.out.println("***" + e.getMessage() + "***");
-    }
+      System.out.println("***" + e.getMessage() + "1***");
+    } catch (ParseException e) {
+        e.printStackTrace();
+      }
     return compra;
   }
+/*
 
-  public List<Compra> allTicketCliente (String dni) { //Revisar Select
+  public List<Compra> allTicketCliente (String dni) {
     Compra compra = null;
     Cliente cliente;
     Producto producto;
@@ -90,10 +99,10 @@ public class DAOImpCompraBD implements DAOCompra {
     return allTicket;
   }
 
-  public List<Compra> allTicket () { //Terminar
+  public List<Compra> allTicket () {
 
   }
-
+*/
   public void cerrar() {
     try {
       con.close();

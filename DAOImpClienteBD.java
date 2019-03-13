@@ -22,18 +22,19 @@ public class DAOImpClienteBD implements DAOCliente {
 	}
 
 	public void alta (Cliente cliente) {
-		String sql = "INSERT INTO cliente(Name,Dni,Direccion) VALUES(?,?,?)";
+		String sql = "INSERT INTO cliente(Nombre,Dni,Direccion) VALUES(?,?,?)";
     try{
       PreparedStatement pstmt = con.prepareStatement(sql);
-      pstmt.setString(1, cliente.getName());
-      pstmt.setString(2, producto.getDni());
-      pstmt.setString(3, producto.getDireccion());
+      pstmt.setString(1, cliente.getNombre());
+      pstmt.setString(2, cliente.getDni());
+      pstmt.setString(3, cliente.getDireccion());
       pstmt.executeUpdate();
       System.out.println("Insertado en la DB ");
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "***");
     }
 	}
+/*
 	public void baja (Cliente cliente) {
 		String sql = "DELETE FROM cliente where Dni = ?";
 		try{
@@ -131,7 +132,7 @@ public class DAOImpClienteBD implements DAOCliente {
 		dc.cerrar();
 		return false;
 	}
-
+*/
 
 	public void cerrar() {
     try {
