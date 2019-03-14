@@ -46,8 +46,16 @@ public class DAOImpCompraBD implements DAOCompra {
     }
   }
 
-  public int enumerar () { // Modificar
-    int numFac = 0; 
+  public int enumerar() { // Modificar
+    String sql="SELECT MAX(Factura) FROM compra";
+    int numFac = 0;
+    try {
+      Statement stmt = con.createStatement();
+      ResultSet rs = stmt.executeQuery(sql);
+      numFac = rs.getInt("Factura")+1;
+    } catch (SQLException e) {
+      System.out.println("***" + e.getMessage() + "1***");
+    } 
     return numFac;
   }
 
