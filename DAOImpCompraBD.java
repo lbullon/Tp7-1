@@ -26,7 +26,7 @@ public class DAOImpCompraBD implements DAOCompra {
     }
   }
 
-  public void grabar (Compra compra) {
+  public void grabar (Compra compra) { // Almacena los datos de una compra en la BD
     String sql = "INSERT INTO compra (Factura,Sku,Dni,Fecha,Unidades) VALUES(?,?,?,?,?)";
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     String fechaComoCadena = sdf.format(compra.getFecha());
@@ -46,20 +46,21 @@ public class DAOImpCompraBD implements DAOCompra {
     }
   }
 
-  public int enumerar() { // Modificar
-    String sql="SELECT MAX(Factura) FROM compra";
+  public int enumerar() { // Se encarga de dar un número de factura nuevo incrementa uno a el numFac mayor de la columna Factura 
+    String sql="SELECT Factura FROM compra WHERE Factura = (SELECT MAX(Factura) FROM compra)"; //Consulta el numero de factura mayor
     int numFac = 0;
     try {
       Statement stmt = con.createStatement();
       ResultSet rs = stmt.executeQuery(sql);
-      numFac = rs.getInt("Factura")+1;
+      numFac = rs.getInt("Factura");  
+      numFac++;
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "1***");
     } 
     return numFac;
   }
 
-  public Compra ticket (int numFac) {
+  public Compra ticket (int numFac) { //Devuelve una compra de una factura pedida
     Compra compra = null;
     Cliente cliente = null;
     Producto producto= null;
@@ -84,39 +85,8 @@ public class DAOImpCompraBD implements DAOCompra {
       }
     return compra;
   }
-/*
 
-  public List<Compra> allTicketCliente (String dni) {
-    Compra compra = null;
-    Cliente cliente;
-    Producto producto;
-    Map<Producto,double> comprado;
-    List<Compra> allticket = new ArrayList<Compra>();
-    String sqlCliente = "SELECT Dni, Nombre, Direccion FROM cliente WHERE Dni = '"+dni+"'"; // para conseguir datos de la tabla Cliente
-    String sqlProductos = "SELECT A.Sku, Nombre, Precio, Cantidad, Unidades FROM compra C, albaran A WHERE dni ="+dni; // Conseguir los datos de los productos y unidades compradas para generar el Map<Producto,Double>
-    String sqlFecha = "SELECT Factura, Fecha FROM compra WHERE Dni ="+dni;
-    try {
-      Statement stmt = con.createStatement();
-      ResultSet rs = stmt.executeQuery(sqlCliente);
-      cliente = new Cliente(rs.getString("Nombre"),rs.getString("Dni"),rs.getString("Direccion"));
-      ResultSet rs = stmt.executeQuery(sqlProductos);
-      while (rs.next()) {
-        producto = new Producto(rs.getInt("Sku"),rs.getString("Name"),rs.getDouble("Precio"), rs.getDouble("Cantidad"));
-        comprado.put(producto,rs.getDouble("Unidades"));
-      }
-      ResultSet rs = stmt.executeQuery(sqlFecha);
-      compra = new Compra(cliente,comprado,rs.getInt("Factura"),rs.getDate("Fecha"));
-    } catch (SQLException e) {
-      System.out.println("***" + e.getMessage() + "***");
-    }
-    return allTicket;
-  }
-
-  public List<Compra> allTicket () {
-
-  }
-*/
-  public void cerrar() {
+  public void cerrar() { //Cierra la conexion
     try {
       con.close();
     } catch (SQLException e) {
