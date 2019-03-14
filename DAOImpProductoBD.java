@@ -19,7 +19,7 @@ public class DAOImpProductoBD implements DAOProducto{
        System.out.println(e.getMessage());
     }
 	}
-
+/*
 	public void actualizar(Producto producto) {
 		String sql = "UPDATE albaran SET Name = ? , Precio = ? , Cantidad = ? WHERE Sku = ?";
     try{
@@ -34,7 +34,7 @@ public class DAOImpProductoBD implements DAOProducto{
     	System.out.println("***" + e.getMessage() + "***");
     }
 	}
-
+*/
 	public List<Producto> leerTodos(){
 		Producto producto;
 		List<Producto> albaran = new ArrayList<Producto>();
@@ -51,7 +51,7 @@ public class DAOImpProductoBD implements DAOProducto{
       }
     return albaran;
 	}
-
+/*
 	public Producto leer(String name) {
 		Producto producto = null;
 		String sql = "SELECT Sku, Name, Precio, Cantidad FROM albaran WHERE Name LIKE '"+name+"'";
@@ -64,8 +64,8 @@ public class DAOImpProductoBD implements DAOProducto{
     }
     return producto;
 	}
-
-	public void insertar(Producto producto) {
+*/
+	public void grabar(Producto producto) {
 		String sql = "INSERT INTO albaran(Sku,Name,Precio,Cantidad) VALUES(?,?,?,?)";
     try{
       PreparedStatement pstmt = con.prepareStatement(sql);
@@ -79,7 +79,7 @@ public class DAOImpProductoBD implements DAOProducto{
       System.out.println("***" + e.getMessage() + "***");
     }
 	}
-
+/*
 	public void insertarListado(List<Producto> albaran){
 		String sql = "INSERT INTO albaran(Sku,Name,Precio,Cantidad) VALUES(?,?,?,?)";
     try{
@@ -96,7 +96,7 @@ public class DAOImpProductoBD implements DAOProducto{
       System.out.println("***" + e.getMessage() + "***");
     }
 	}
-
+*/
 	public void cerrar() {
     try {
       con.close();

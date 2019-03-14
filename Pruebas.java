@@ -6,9 +6,9 @@ public class Pruebas {
 		DAOCompra dao = new DAOImpCompraBD();
 		DAOProducto dao2 = new DAOImpProductoBD();
 		DAOCliente dao3 = new DAOImpClienteBD();
-		Map<Producto,Double> comprado = new HashMap<Producto,Double>();
+		/*Map<Producto,Double> comprado = new HashMap<Producto,Double>();
 		Map<Producto,Double> comprado1 = new HashMap<Producto,Double>();
-		/*Producto p1 = new Producto(11111,"manzana",1.4,200);
+		Producto p1 = new Producto(11111,"manzana",1.4,200);
 		dao2.insertar(p1);
 		Producto p2 = new Producto(11112,"fresa",2.5,200);
 		dao2.insertar(p2);
@@ -36,11 +36,16 @@ public class Pruebas {
 		System.out.println(compra.toString());
 		System.out.println(compra1.toString());
 		dao.grabar(compra);
-		dao.grabar(compra1);*/
+		dao.grabar(compra1);
 		Compra c = dao.ticket(2);
 		Compra c1 = dao.ticket(1);
 		System.out.println(c.toString());
-		System.out.println(c1.toString());
+		System.out.println(c1.toString());*/
+		Cliente cliente = null;
+		cliente = dao3.leer("47532231B");
+		Cliente cliente2 = new Cliente("Maria","47532231B","Calle Falsa 22");
+		dao3.grabar(cliente2);
+		System.out.println(cliente.toString());
 		dao.cerrar();
 
 

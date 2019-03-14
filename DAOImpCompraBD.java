@@ -46,6 +46,11 @@ public class DAOImpCompraBD implements DAOCompra {
     }
   }
 
+  public int enumerar () { // Modificar
+    int numFac = 0; 
+    return numFac;
+  }
+
   public Compra ticket (int numFac) {
     Compra compra = null;
     Cliente cliente = null;

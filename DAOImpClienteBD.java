@@ -21,18 +21,22 @@ public class DAOImpClienteBD implements DAOCliente {
     }
 	}
 
-	public void alta (Cliente cliente) {
-		String sql = "INSERT INTO cliente(Nombre,Dni,Direccion) VALUES(?,?,?)";
-    try{
-      PreparedStatement pstmt = con.prepareStatement(sql);
-      pstmt.setString(1, cliente.getNombre());
-      pstmt.setString(2, cliente.getDni());
-      pstmt.setString(3, cliente.getDireccion());
-      pstmt.executeUpdate();
-      System.out.println("Insertado en la DB ");
-    } catch (SQLException e) {
-      System.out.println("***" + e.getMessage() + "***");
-    }
+	public void grabar (Cliente cliente) {
+		List<Cliente> clientes = null;
+		clientes = leerTodos();
+		if (!clientes.contains(cliente)){
+			String sql = "INSERT INTO cliente(Nombre,Dni,Direccion) VALUES(?,?,?)";
+	    try{
+	      PreparedStatement pstmt = con.prepareStatement(sql);
+	      pstmt.setString(1, cliente.getNombre());
+	      pstmt.setString(2, cliente.getDni());
+	      pstmt.setString(3, cliente.getDireccion());
+	      pstmt.executeUpdate();
+	      System.out.println("Insertado en la DB ");
+	    } catch (SQLException e) {
+	      System.out.println("***" + e.getMessage() + "***");
+	    }
+	  }   
 	}
 /*
 	public void baja (Cliente cliente) {
@@ -46,6 +50,7 @@ public class DAOImpClienteBD implements DAOCliente {
       System.out.println("***" + e.getMessage() + "***");
     }
 	}
+*/
 	public Cliente leer (String dni) {
 		Cliente cliente = null;
 		String sql = "SELECT Nombre, Dni, Direccion FROM cliente WHERE Dni LIKE '"+dni+"'";
@@ -73,9 +78,9 @@ public class DAOImpClienteBD implements DAOCliente {
       } catch (SQLException e) {
         System.out.println(e.getMessage());
       }
-    return albaran;
+    return clientes;
 	}
-
+/*
 	public void actualizar (Cliente cliente) {
 		String sql = "UPDATE albaran SET Nombre = ? , Direccion = ? WHERE Dni = ?";
     try{
