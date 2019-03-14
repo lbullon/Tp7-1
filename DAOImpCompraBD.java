@@ -28,7 +28,7 @@ public class DAOImpCompraBD implements DAOCompra {
 
   public void grabar (Compra compra) { // Almacena los datos de una compra en la BD
     String sql = "INSERT INTO compra (Factura,Sku,Dni,Fecha,Unidades) VALUES(?,?,?,?,?)";
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
     String fechaComoCadena = sdf.format(compra.getFecha());
     try{
       PreparedStatement pstmt = con.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class DAOImpCompraBD implements DAOCompra {
         pstmt.setDouble(5, compra.getComprado().get(key));
         pstmt.executeUpdate();
       }
-      System.out.println("Insertado en la DB ");
+      System.out.println("Insertada en la DB ");
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "***");
     }
@@ -70,7 +70,7 @@ public class DAOImpCompraBD implements DAOCompra {
       Statement stmt = con.createStatement();
       ResultSet rs = stmt.executeQuery(sql);
       cliente=new Cliente(rs.getString("Dni"),rs.getString("Nombre"),rs.getString("Direccion"));
-      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+      SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
       Date fecha = sdf.parse(rs.getString("Fecha"));
       while (rs.next()) {
         producto = new Producto(rs.getInt("Sku"),rs.getString("Name"),rs.getDouble("Precio"),rs.getDouble("Cantidad"));
