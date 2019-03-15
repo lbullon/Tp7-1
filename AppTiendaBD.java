@@ -10,7 +10,7 @@ public class AppTiendaBD {
 		DAOProducto dao2 = new DAOImpProductoBD();
 		DAOCliente dao3 = null;
 		List<Producto> albaran = null;
-		Map<Producto,Double> comprado= new HashMap<Producto,Double>();
+		Map<Producto,Double> comprado= null;
 		Cliente cliente = null;
 		Producto producto = null;
 		Compra compra = null;
@@ -29,7 +29,8 @@ public class AppTiendaBD {
 
     			/*VENTA*/
     while (tiendaAbierta){
-	    System.out.println("\n****Datos de cliente*****"); 
+	    System.out.println("\n****Datos de cliente*****");
+	    	comprado= new HashMap<Producto,Double>(); 
 			cliente = new Cliente();
 			System.out.print("Dni: ");
 			cliente.setDni(sc.nextLine());
