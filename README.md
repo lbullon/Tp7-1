@@ -86,10 +86,6 @@ $ java -cp <direccion del jar>:. AppTiendaBD
 ```
 Una vez cerrada la tienda los datos serán almacenados en la DB tienda.db .
 
-_Para crear la base de datos:_
-```
-create table
-```
 
 ## Autores ✒️
 
