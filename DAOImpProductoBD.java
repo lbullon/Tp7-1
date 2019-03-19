@@ -16,9 +16,17 @@ public class DAOImpProductoBD implements DAOProducto{
 		try {
       con = DriverManager.getConnection("jdbc:sqlite:tienda.db");
     } catch (SQLException e) {
-       System.out.println(e.getMessage());
+      System.out.println(e.getMessage());
     }
 	}
+
+  public DAOImpProductoBD(String conexion){ // Para cualquier conexion p.ej con mysql
+    try {
+      con = DriverManager.getConnection(conexion);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
 
 	public List<Producto> leerTodos(){
 		Producto producto;
@@ -56,7 +64,7 @@ public class DAOImpProductoBD implements DAOProducto{
     try {
       con.close();
     } catch (SQLException e) {
-       System.out.println(e.getMessage());
+      System.out.println(e.getMessage());
     }  
   }
 }
