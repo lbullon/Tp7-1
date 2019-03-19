@@ -6,8 +6,9 @@ import java.util.HashMap;
 
 public class AppTiendaBD {
 	public static void main(String[] args) {
+		String conexion = "jdbc:sqlite:tienda.db"; // Para cualquier conexion de base de datos
 		DAOCompra dao = null;
-		DAOProducto dao2 = new DAOImpProductoBD();
+		DAOProducto dao2 = new DAOImpProductoBD(conexion);
 		DAOCliente dao3 = null;
 		List<Producto> albaran = null;
 		Map<Producto,Double> comprado= null;
@@ -30,11 +31,11 @@ public class AppTiendaBD {
     			/*VENTA*/
     while (tiendaAbierta){
 	    System.out.println("\n****Datos de cliente*****");
-	    	comprado= new HashMap<Producto,Double>(); 
+	    comprado= new HashMap<Producto,Double>(); 
 			cliente = new Cliente();
 			System.out.print("Dni: ");
 			cliente.setDni(sc.nextLine());
-			dao3 = new DAOImpClienteBD();
+			dao3 = new DAOImpClienteBD(conexion);
 			dao3.grabar(cliente);//Graba si no está almacenado en la base de datos
 			dao3.cerrar();	
 			while(clienteComprando) {
@@ -57,7 +58,7 @@ public class AppTiendaBD {
 	    	}
 	    }
 	    clienteComprando = true;
-	    dao = new DAOImpCompraBD();	// Por la necesidad de cerrarlo por si necesito hacer insert de clientes nuevos
+	    dao = new DAOImpCompraBD(conexion);	// Por la necesidad de cerrarlo por si necesito hacer insert de clientes nuevos
 	    numFac = dao.enumerar();
 	    compra = new Compra(cliente,comprado,numFac);
 	    dao.grabar(compra);
@@ -67,7 +68,7 @@ public class AppTiendaBD {
 	   		tiendaAbierta = false;
 	   	}
 	  }
-	  dao = new DAOImpCompraBD();
+	  dao = new DAOImpCompraBD(conexion);
 
     System.out.println(dao.ticket(numFac)); //Imprime ticket en este caso el ultimo registrado
     System.out.println(dao.ticket(numFac-1));

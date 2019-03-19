@@ -15,11 +15,19 @@ public class DAOImpClienteBD implements DAOCliente {
 
 	public DAOImpClienteBD(){
 		try {
-      con = DriverManager.getConnection("jdbc:sqlite:tienda.db");
+			con = DriverManager.getConnection("jdbc:sqlite:tienda.db");
     } catch (SQLException e) {
-       System.out.println(e.getMessage());
+    	System.out.println(e.getMessage());
     }
 	}
+
+	public DAOImpClienteBD(String conexion){ // Para cualquier conexion p.ej con mysql
+    try {
+      con = DriverManager.getConnection(conexion);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
 
 	public void grabar (Cliente cliente) {
 		List<Cliente> clientes = null;
@@ -76,9 +84,9 @@ public class DAOImpClienteBD implements DAOCliente {
 
 	public void cerrar() {
     try {
-      con.close();
+    	con.close();
     } catch (SQLException e) {
-       System.out.println(e.getMessage());
+    	System.out.println(e.getMessage());
     }  
   }
 }

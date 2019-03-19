@@ -22,7 +22,15 @@ public class DAOImpCompraBD implements DAOCompra {
     try {
       con = DriverManager.getConnection("jdbc:sqlite:tienda.db");
     } catch (SQLException e) {
-       System.out.println(e.getMessage());
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public DAOImpCompraBD(String conexion){ // Para cualquier conexion p.ej con mysql
+    try {
+      con = DriverManager.getConnection(conexion);
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
     }
   }
 
@@ -81,8 +89,8 @@ public class DAOImpCompraBD implements DAOCompra {
     } catch (SQLException e) {
       System.out.println("***" + e.getMessage() + "1***");
     } catch (ParseException e) {
-        e.printStackTrace();
-      }
+      e.printStackTrace();
+    }
     return compra;
   }
 
@@ -90,7 +98,7 @@ public class DAOImpCompraBD implements DAOCompra {
     try {
       con.close();
     } catch (SQLException e) {
-       System.out.println(e.getMessage());
+      System.out.println(e.getMessage());
     }  
   }
 }
